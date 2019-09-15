@@ -1,0 +1,41 @@
+{
+  "name": "happysir/s-respository",
+  "description": "A respository design patterns for swoft",
+  "type": "library",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "happysir",
+      "email": "luotao954@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">7.2",
+    "ext-redis": "*",
+    "swoft/db": "2.0.5",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "swoft/swoole-ide-helper": "dev-master",
+    "swoft/framework": "~2.0.0",
+    "phpunit/phpunit": "^7.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Happysir\\Respository\\": "src/"
+    },
+    "files": [
+      "./src/Helper/Functions.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+    }
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://mirrors.aliyun.com/composer/"
+    }
+  }
+}
