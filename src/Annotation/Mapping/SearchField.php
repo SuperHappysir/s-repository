@@ -1,6 +1,6 @@
 <?php
 
-namespace Happysir\Respostitory\Annotation\Mapping;
+namespace Happysir\Respository\Annotation\Mapping;
 
 use Doctrine\Common\Annotations\Annotation\Attribute;
 use Doctrine\Common\Annotations\Annotation\Attributes;

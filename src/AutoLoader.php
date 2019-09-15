@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Happysir\Respostitory;
+namespace Happysir\Respository;
 
 use Swoft\SwoftComponent;
 

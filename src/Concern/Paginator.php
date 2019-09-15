@@ -1,6 +1,6 @@
 <?php
 
-namespace Happysir\Respostitory\Concern;
+namespace Happysir\Respository\Concern;
 
 use Swoft\Stdlib\Collection;
 

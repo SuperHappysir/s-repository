@@ -1,6 +1,6 @@
 <?php
 
-namespace Happysir\Respostitory\Exception;
+namespace Happysir\Respository\Exception;
 
 use Exception;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Happysir\Respostitory;
+namespace Happysir\Respository;
 
-use Happysir\Respostitory\Concern\TableTraitHelper;
-use Happysir\Respostitory\Contract\RespositoryInterface;
-use Happysir\Respostitory\Exception\RespositoryBaseException;
+use Happysir\Respository\Concern\TableTraitHelper;
+use Happysir\Respository\Contract\RespositoryInterface;
+use Happysir\Respository\Exception\RespositoryBaseException;
 use Swoft\Db\Eloquent\Builder;
 use Swoft\Db\Eloquent\Collection;
 use Swoft\Db\Eloquent\Model;
@@ -233,7 +233,7 @@ abstract class Respository implements RespositoryInterface
     /**
      * @param \Swoft\Db\Eloquent\Model $entity
      * @return \Swoft\Db\Eloquent\Model
-     * @throws \Happysir\Respostitory\Exception\RespositoryBaseException
+     * @throws \Happysir\Respository\Exception\RespositoryBaseException
      * @throws \ReflectionException
      * @throws \Swoft\Bean\Exception\ContainerException
      * @throws \Swoft\Db\Exception\DbException
@@ -251,7 +251,7 @@ abstract class Respository implements RespositoryInterface
     /**
      * @param \Swoft\Db\Eloquent\Model $entity
      * @return \Swoft\Db\Eloquent\Model
-     * @throws \Happysir\Respostitory\Exception\RespositoryBaseException
+     * @throws \Happysir\Respository\Exception\RespositoryBaseException
      * @throws \ReflectionException
      * @throws \Swoft\Bean\Exception\ContainerException
      * @throws \Swoft\Db\Exception\DbException

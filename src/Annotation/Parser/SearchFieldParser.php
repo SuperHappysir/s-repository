@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace Happysir\Respostitory\Annotation\Parser;
+namespace Happysir\Respository\Annotation\Parser;
 
-use Happysir\Respostitory\Annotation\Mapping\SearchField;
+use Happysir\Respository\Annotation\Mapping\SearchField;
 use Swoft\Annotation\Annotation\Mapping\AnnotationParser;
 use Swoft\Annotation\Annotation\Parser\Parser;
 

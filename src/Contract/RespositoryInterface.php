@@ -1,6 +1,6 @@
 <?php
 
-namespace Happysir\Respostitory\Contract;
+namespace Happysir\Respository\Contract;
 
 use Swoft\Db\Eloquent\Collection;
 use Swoft\Db\Eloquent\Model;
