@@ -2,6 +2,8 @@
 
 namespace Happysir\Respository\Contract;
 
+use Happysir\Respository\Exception\NotFoundException;
+use Happysir\Respository\Respository;
 use Swoft\Db\Eloquent\Collection;
 use Swoft\Db\Eloquent\Model;
 
@@ -245,4 +247,17 @@ interface RespositoryInterface
      * @throws \Swoft\Db\Exception\DbException
      */
     public function firstOrCreate(array $attributes = []) : Model;
+    
+    /**
+     * 获取账户，账户不存在时抛出异常
+     *
+     * @param int   $id
+     * @param array $columns
+     * @return \Swoft\Db\Eloquent\Model
+     * @throws \Happysir\Respository\Exception\NotFoundException
+     * @throws \ReflectionException
+     * @throws \Swoft\Bean\Exception\ContainerException
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public function findOrFail(int $id, array $columns = ['*']) : Model;
 }

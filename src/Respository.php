@@ -2,12 +2,17 @@
 
 namespace Happysir\Respository;
 
+use Happysir\Respository\Concern\Paginator;
+use Happysir\Respository\Concern\Searcher;
 use Happysir\Respository\Concern\TableTraitHelper;
 use Happysir\Respository\Contract\RespositoryInterface;
+use Happysir\Respository\Exception\NotFoundException;
 use Happysir\Respository\Exception\RespositoryBaseException;
 use Swoft\Db\Eloquent\Builder;
+use Swoft\Db\Eloquent\Builder as EloquentBuilder;
 use Swoft\Db\Eloquent\Collection;
 use Swoft\Db\Eloquent\Model;
+use Swoft\Db\Schema\Builder as SchemaBuilder;
 
 /**
  * Class Respository
@@ -26,7 +31,7 @@ abstract class Respository implements RespositoryInterface
     {
         /** @var Model $class */
         $class = $this->model();
-    
+        
         return $class::query();
     }
     
@@ -41,6 +46,28 @@ abstract class Respository implements RespositoryInterface
     public function find(int $id, array $columns = ['*']) : ?Model
     {
         return $this->eloquentBuilder()->find($id, $columns);
+    }
+    
+    /**
+     * 获取账户，账户不存在时抛出异常
+     *
+     * @param int   $id
+     * @param array $columns
+     * @return \Swoft\Db\Eloquent\Model
+     * @throws \Happysir\Respository\Exception\NotFoundException
+     * @throws \ReflectionException
+     * @throws \Swoft\Bean\Exception\ContainerException
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public function findOrFail(int $id, array $columns = ['*']) : Model
+    {
+        /** @var Model $entity */
+        $entity =  $this->find($id, $columns);
+        if ($entity === null) {
+            throw new NotFoundException('账户不存在');
+        }
+        
+        return $entity;
     }
     
     /**
@@ -84,7 +111,7 @@ abstract class Respository implements RespositoryInterface
     public function getWhere(array $where, $columns = ['*']) : Collection
     {
         $builder = $this->eloquentBuilder();
-    
+        
         foreach ($where as $item) {
             $builder->where(...$item);
         }
@@ -106,7 +133,9 @@ abstract class Respository implements RespositoryInterface
         array $values,
         $columns = ['*']
     ) : Collection {
-        return $this->eloquentBuilder()->whereIn($field, $values)->get($columns);
+        return $this->eloquentBuilder()
+                    ->whereIn($field, $values)
+                    ->get($columns);
     }
     
     /**
@@ -123,7 +152,9 @@ abstract class Respository implements RespositoryInterface
         array $values,
         $columns = ['*']
     ) : Collection {
-        return $this->eloquentBuilder()->whereNotIn($field, $values)->get($columns);
+        return $this->eloquentBuilder()
+                    ->whereNotIn($field, $values)
+                    ->get($columns);
     }
     
     /**
@@ -148,7 +179,7 @@ abstract class Respository implements RespositoryInterface
      */
     public function allPluck(string $column, $key = null) : Collection
     {
-        $columns    = array_filter(
+        $columns = array_filter(
             [
                 $column,
                 $key
@@ -158,7 +189,7 @@ abstract class Respository implements RespositoryInterface
         $collection = $this->eloquentBuilder()
                            ->get($columns)
                            ->pluck($column, $key);
-    
+        
         return $collection;
     }
     
@@ -198,11 +229,11 @@ abstract class Respository implements RespositoryInterface
     public function updateWhere(array $where, array $columns) : int
     {
         $builder = $this->eloquentBuilder();
-    
+        
         foreach ($where as $item) {
             $builder->where(...$item);
         }
-    
+        
         return $builder->update($columns);
     }
     
@@ -215,7 +246,12 @@ abstract class Respository implements RespositoryInterface
      */
     public function delete(int $id) : bool
     {
-        return $this->eloquentBuilder()->whereKey($id)->update(['is_deleted', 1]);
+        return $this->eloquentBuilder()->whereKey($id)->update(
+            [
+                'is_deleted',
+                1
+            ]
+        );
     }
     
     /**
@@ -244,7 +280,7 @@ abstract class Respository implements RespositoryInterface
             throw new RespositoryBaseException('实体已存在,不能再次创建');
         }
         $entity->save();
-    
+        
         return $entity;
     }
     
@@ -262,7 +298,7 @@ abstract class Respository implements RespositoryInterface
             throw new RespositoryBaseException('实体不存在,不能执行保存操作');
         }
         $entity->save();
-    
+        
         return $entity;
     }
     
@@ -288,5 +324,31 @@ abstract class Respository implements RespositoryInterface
     public function firstOrCreate(array $attributes = []) : Model
     {
         return $this->eloquentBuilder()->firstOrCreate($attributes);
+    }
+    
+    /**
+     * @param \Swoft\Db\Query\Builder|EloquentBuilder|SchemaBuilder $queryBuilder
+     * @param \Happysir\Respository\Concern\Searcher                $searcher
+     * @param array                                                 $columns
+     * @return Paginator
+     */
+    protected function getPaginator(
+        $queryBuilder,
+        Searcher $searcher,
+        array $columns = ['*']
+    ) : Paginator {
+        $paginator = $queryBuilder->paginate(
+            $searcher->getPage(),
+            $searcher->getPageSize(),
+            $columns
+        );
+        
+        return new Paginator(
+            $paginator['count'],
+            $searcher->getPageSize(),
+            $searcher->getPage(),
+            $paginator['pageCount'],
+            $paginator['list']
+        );
     }
 }
