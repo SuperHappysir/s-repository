@@ -13,13 +13,6 @@ use Swoft\Db\Eloquent\Model;
 interface RespositoryInterface
 {
     /**
-     * dao管理的默认实体
-     *
-     * @return string
-     */
-    public function model() : string;
-    
-    /**
      * @param int   $id
      * @param array $columns
      * @return \Swoft\Db\Eloquent\Model|null

@@ -14,7 +14,8 @@
     "ext-redis": "*",
     "swoft/db": "2.0.5",
     "ext-json": "*",
-    "happysir/s-respository": "dev-master"
+    "happysir/s-respository": "dev-master",
+    "happysir/s-stdlib": "dev-master"
   },
   "require-dev": {
     "swoft/swoole-ide-helper": "dev-master",

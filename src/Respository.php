@@ -2,6 +2,7 @@
 
 namespace Happysir\Respository;
 
+use Happysir\Lib\Enum\BoolEnum;
 use Happysir\Respository\Concern\Paginator;
 use Happysir\Respository\Concern\Searcher;
 use Happysir\Respository\Concern\TableTraitHelper;
@@ -20,6 +21,13 @@ use Swoft\Db\Schema\Builder as SchemaBuilder;
 abstract class Respository implements RespositoryInterface
 {
     use TableTraitHelper;
+    
+    /**
+     * dao管理的默认实体
+     *
+     * @return string
+     */
+    abstract public function model() : string;
     
     /**
      * @return \Swoft\Db\Eloquent\Builder
@@ -64,7 +72,7 @@ abstract class Respository implements RespositoryInterface
         /** @var Model $entity */
         $entity =  $this->find($id, $columns);
         if ($entity === null) {
-            throw new NotFoundException('账户不存在');
+            throw new NotFoundException();
         }
         
         return $entity;
@@ -249,7 +257,7 @@ abstract class Respository implements RespositoryInterface
         return $this->eloquentBuilder()->whereKey($id)->update(
             [
                 'is_deleted',
-                1
+                BoolEnum::TRUE
             ]
         );
     }
