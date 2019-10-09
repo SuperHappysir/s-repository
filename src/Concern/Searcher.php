@@ -2,12 +2,15 @@
 
 namespace Happysir\Respository\Concern;
 
-use Happysir\Lib\Concern\Fluent;
+use Happysir\Lib\Annotation\Mapping\POJO;
+use Happysir\Lib\BasePOJO;
+use Swoft\Stdlib\Fluent;
 
 /**
  * Class Searcher
+ * @POJO()
  */
-class Searcher extends Fluent
+class Searcher extends BasePOJO
 {
     /**
      * 分页数量
